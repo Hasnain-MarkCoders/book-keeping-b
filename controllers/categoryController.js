@@ -3,7 +3,7 @@ const { responseFormatter } = require('../utils/responseFormatter');
 const { cloud_upload } = require('../utils/cloudinaryConfig');
 const { default: mongoose } = require('mongoose');
 const { convertToObjectIdArray } = require('../utils/helper');
-const Book = require('../models/book');
+const Book = require('../models/Book');
 exports.addCategory = async (req, res) => {
   try {
     const { name, id } = req.body;

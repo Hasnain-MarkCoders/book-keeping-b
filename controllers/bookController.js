@@ -1,4 +1,4 @@
-const Book = require('../models/book');
+const Book = require('../models/Book');
 const { responseFormatter } = require('../utils/responseFormatter');
 const { cloud_upload } = require('../utils/cloudinaryConfig');
 const { convertToObjectIdArray } = require('../utils/helper');
