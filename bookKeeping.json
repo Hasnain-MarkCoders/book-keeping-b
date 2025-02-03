@@ -1,0 +1,235 @@
+{
+  "info": {
+    "_postman_id": "12345678-1234-1234-1234-1234567890ab",
+    "name": "Book_Keeping API Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Admin Signup",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Admin User\",\n  \"email\": \"admin@example.com\",\n  \"password\": \"Admin@123\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/admin/signup",
+          "host": ["{{base_url}}"],
+          "path": ["api", "admin", "signup"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Admin Login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"Admin@123\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/admin/login",
+          "host": ["{{base_url}}"],
+          "path": ["api", "admin", "login"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Customer Signup",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"johndoe@example.com\",\n  \"password\": \"Customer@123\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/auth/signup",
+          "host": ["{{base_url}}"],
+          "path": ["api", "auth", "signup"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Customer Login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"johndoe@example.com\",\n  \"password\": \"Customer@123\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/auth/login",
+          "host": ["{{base_url}}"],
+          "path": ["api", "auth", "login"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Add a Book (Admin Only)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <admin_jwt_token>",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "name",
+              "value": "The Great Gatsby",
+              "type": "text"
+            },
+            {
+              "key": "price",
+              "value": "10",
+              "type": "text"
+            },
+            {
+              "key": "isDonate",
+              "value": "false",
+              "type": "text"
+            },
+            {
+              "key": "isRental",
+              "value": "true",
+              "type": "text"
+            },
+            {
+              "key": "stockInInventory",
+              "value": "5",
+              "type": "text"
+            },
+            {
+              "key": "categoryId",
+              "value": "650f9c8b4e4f8d1c8c8b4e51",
+              "type": "text"
+            },
+            {
+              "key": "picture",
+              "type": "file",
+              "src": []
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{base_url}}/api/books",
+          "host": ["{{base_url}}"],
+          "path": ["api", "books"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get All Books (Public Access)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/books",
+          "host": ["{{base_url}}"],
+          "path": ["api", "books"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Rent a Book (Customer Auth Required)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <customer_jwt_token>",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/books/rent/:bookId",
+          "host": ["{{base_url}}"],
+          "path": ["api", "books", "rent", ":bookId"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Track Payments (Admin Only)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <admin_jwt_token>",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/payments",
+          "host": ["{{base_url}}"],
+          "path": ["api", "payments"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Return a Book (Customer Auth Required)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <customer_jwt_token>",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"customerId\": \"650f9c8b4e4f8d1c8c8b4e50\",\n  \"bookId\": \"650f9c8b4e4f8d1c8c8b4e52\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/payments/return",
+          "host": ["{{base_url}}"],
+          "path": ["api", "payments", "return"]
+        }
+      },
+      "response": []
+    }
+  ]
+}
