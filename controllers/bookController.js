@@ -26,6 +26,11 @@ exports.addBook = async (req, res) => {
     // Fetch categories where the book doesn't exist yet
     const categories = await Category.find({ _id: { $in: categoryIds }, bookIds: { $ne: [] } });
 
+    if (!categories) {
+      return res.status(400).json(responseFormatter("Category not found", null, false));
+    }
+
+
     // Create the book
     const book = await Book.create({
       author,
@@ -37,10 +42,11 @@ exports.addBook = async (req, res) => {
       stockInInventory,
       categoryId: categoryIds,
       ISBN,
-    });
+    })
+    
 
     // Filter out categories where book is already present
-    const categoriesToUpdate = categories.filter(category => !category.bookIds.includes(book._id));
+    const categoriesToUpdate = categories.filter(category => !category.bookId.includes(book._id));
 
     if (categoriesToUpdate.length) {
       await Category.updateMany(
@@ -121,6 +127,19 @@ exports.updateBook = async (req, res) => {
     }
   };
 
+  exports.getABook = async (req, res) => {
+    try {
+     const {bookId} = req.body
+      const book = await Book.findOne({_id:bookId}).populate('categoryId');
+      res.status(200).json(responseFormatter("Book fetched successfully", book, true));
+    } catch (error) {
+      res.status(500).json(responseFormatter("Error fetching books", error.message, false));
+    }
+  };
+
+
+  
+
   exports.deleteAllBooks = async (req, res) => {
     try {
       // Delete all books from the database
@@ -137,7 +156,7 @@ exports.updateBook = async (req, res) => {
   };
   exports.deleteBook = async (req, res) => {
     try {
-      const { bookId } = req.params;
+      const { bookId } = req.body;
   
       if (!bookId) return res.status(400).json(responseFormatter("Book ID is required", null, false));
   
